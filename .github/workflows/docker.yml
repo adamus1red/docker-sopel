@@ -100,5 +100,5 @@ jobs:
             SOPEL_BRANCH=$(git describe --tags --abbrev=0)
             VCS_REF=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
             PYTHON_TAG=${{ matrix.python }}-alpine
-            BUILD_DATE="${{ github.env.BUILD_DATE }}"
+            BUILD_DATE=${{ github.env.BUILD_DATE }}
           tags: ${{ steps.prep.outputs.tags }}
