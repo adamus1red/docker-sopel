@@ -61,7 +61,7 @@ jobs:
             VERSION=pr-${{ github.event.number }}
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}-py${{ matrix.python }}"
-          if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]] && [[ $GITHUB_REF == refs/tags/* ]]; then
+          if [[ ${{ github.event.inputs.sopel_version }} =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
             MINOR=${VERSION%.*}
             MAJOR=${MINOR%.*}
             TAGS="$TAGS,${DOCKER_IMAGE}:${MINOR}-py${{ matrix.python }},${DOCKER_IMAGE}:${MAJOR}-py${{ matrix.python }},${DOCKER_IMAGE}:py${{ matrix.python }}"
