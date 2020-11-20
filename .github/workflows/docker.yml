@@ -25,8 +25,7 @@ jobs:
     env:
       SOPEL_BRANCH: master
       PYTHON_DEFAULT: 3.9
-      BUILD_DATE: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
-      DOCKERFILE_VCS_REF: $(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
+      BUILD_  DATE: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
     strategy:
       matrix:
@@ -96,5 +95,5 @@ jobs:
           push: true
           build-args: |
             SOPEL_BRANCH=${SOPEL_BRANCH}
-            VCS_REF=${DOCKERFILE_VCS_REF}
+            VCS_REF=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
           tags: ${{ steps.prep.outputs.tags }}
