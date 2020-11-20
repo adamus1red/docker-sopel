@@ -29,12 +29,13 @@ jobs:
 
     env:
       SOPEL_BRANCH: master
-      PYTHON_DEFAULT: 3.9
+      PYTHON_DEFAULT: 3
       BUILD_  DATE: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+      PLATFORMS: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
 
     strategy:
       matrix:
-        python: [3.6, 3.7, 3.8, 3.9]
+        python: [3.6, 3.7, 3.8, 3.9, 3]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -73,9 +74,6 @@ jobs:
             if [[ ${{ matrix.python }} == ${PYTHON_DEFAULT} ]]; then
               # Handle people who don't care about a specific version of python.
               TAGS="$TAGS,${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${MINOR},${DOCKER_IMAGE}:${MAJOR},${DOCKER_IMAGE}:latest"
-
-              # Default Python Tags
-              TAGS="$TAGS,${DOCKER_IMAGE}:${VERSION}-py3,${DOCKER_IMAGE}:${MINOR}-py3,${DOCKER_IMAGE}:${MAJOR}-py3"
             fi
           elif [ "${{ github.event_name }}" = "push" ]; then
             TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
@@ -96,10 +94,10 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          platforms: ${PLATFORMS}
           push: true
           build-args: |
-            SOPEL_BRANCH=master
+            SOPEL_BRANCH=$(git describe --tags --abbrev=0)
             VCS_REF=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
             PYTHON_TAG=${{ matrix.python }}-alpine
           tags: ${{ steps.prep.outputs.tags }}
