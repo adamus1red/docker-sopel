@@ -96,4 +96,5 @@ jobs:
           build-args: |
             SOPEL_BRANCH=master
             VCS_REF=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
+            PYTHON_TAG=${{ matrix.python }}-alpine
           tags: ${{ steps.prep.outputs.tags }}
