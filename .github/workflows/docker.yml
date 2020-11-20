@@ -94,6 +94,6 @@ jobs:
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           build-args: |
-            SOPEL_BRANCH=${SOPEL_BRANCH}
+            SOPEL_BRANCH=master
             VCS_REF=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
           tags: ${{ steps.prep.outputs.tags }}
