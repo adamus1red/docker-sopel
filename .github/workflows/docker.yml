@@ -71,7 +71,7 @@ jobs:
             INPUT_VERSION="${{ github.event.inputs.sopel_version }}"
             MINOR=${INPUT_VERSION%.*}
             MAJOR=${MINOR%.*}
-            TAGS="$TAGS,${DOCKER_IMAGE}:${MINOR}-py${{ matrix.python }},${DOCKER_IMAGE}:${MAJOR}-py${{ matrix.python }},${DOCKER_IMAGE}:py${{ matrix.python }}"
+            TAGS="${DOCKER_IMAGE}:${MINOR}-py${{ matrix.python }},${DOCKER_IMAGE}:${MAJOR}-py${{ matrix.python }},${DOCKER_IMAGE}:py${{ matrix.python }}"
             if [[ ${{ matrix.python }} == ${PYTHON_DEFAULT} ]]; then
               # Handle people who don't care about a specific version of python.
               TAGS="$TAGS,${DOCKER_IMAGE}:${INPUT_VERSION},${DOCKER_IMAGE}:${MINOR},${DOCKER_IMAGE}:${MAJOR},${DOCKER_IMAGE}:latest"
