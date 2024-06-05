@@ -25,7 +25,7 @@ change_gid () {
 install_pip_package () {
   PACKAGE="${1}"
   echo -e "\033[44mInstalling package \"${PACKAGE}\" with pip...\033[0m"
-  su-exec sopel pip install --user "${PACKAGE}" || {
+  su-exec sopel pip install -c /constraints.txt --user "${PACKAGE}" || {
     RC=$?
     echo -e "\033[41mFAILED!\033[0m" && return $RC
   }

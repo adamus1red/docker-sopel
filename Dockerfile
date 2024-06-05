@@ -95,6 +95,7 @@ COPY --from=git-fetch --chown=sopel:sopel /sopel-src /home/sopel/sopel-src
 RUN set -ex \
   && cd ./sopel-src \
   && su-exec sopel python -m pip install . \
+  && echo "sopel==${SOPEL_BRANCH}" > /constraints.txt \
   && cd .. \
   && rm -rf ./sopel-src \
   && apk del .build-deps
